@@ -2,7 +2,7 @@
 -- T-SQL Fundamentals Fourth Edition
 -- Chapter 07 - T-SQL for Data Analysis
 -- Exercises
--- © Itzik Ben-Gan 
+-- ï¿½ Itzik Ben-Gan 
 ---------------------------------------------------------------------
 
 -- All exercises for this chapter will involve querying the dbo.Orders
@@ -28,6 +28,17 @@ C      10006       14          1                    1
 C      20002       20          2                    2
 C      30004       22          3                    3
 D      30007       30          1                    1
+
+
+/* patrick_Solution 1 */
+SELECT o.custid, o.orderid, 
+SUM(d.qty) as qty,
+RANK() OVER (PARTITION BY o.custid ORDER BY SUM(d.qty) ASC) as rnk,
+DENSE_RANK() OVER (PARTITION BY o.custid ORDER BY SUM(d.qty) ASC) as drnk
+FROM Sales.Orders o 
+JOIN Sales.OrderDetails d on o.orderid = d.orderid
+GROUP BY o.custid, o.orderid
+ORDER BY o.custid,  SUM(d.qty) ASC;
 
 -- 2
 -- The following query against the Sales.OrderValues view returns
@@ -194,7 +205,7 @@ groupingset empid       custid orderyear   sumqty
 -- 7
 -- Write a query against the Sales.Orders table that returns a row for
 -- each week, assuming the week starts on a Sunday, with result columns
--- showing when the week started, ended, and the week’s order count
+-- showing when the week started, ended, and the weekï¿½s order count
 -- Table involved: TSQLV6 database, Sales.Orders table
 
 -- Desired output:
