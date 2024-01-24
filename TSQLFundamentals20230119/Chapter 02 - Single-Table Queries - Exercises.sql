@@ -2,12 +2,24 @@
 -- T-SQL Fundamentals Fourth Edition
 -- Chapter 02 - Single-Table Queries
 -- Exercises
--- © Itzik Ben-Gan 
+-- ï¿½ Itzik Ben-Gan 
 ---------------------------------------------------------------------
 
 -- 1 
 -- Return orders placed in June 2021
 -- Tables involved: TSQLV6 database, Sales.Orders table
+
+/* PDesg code */
+USE TSQLV6;
+GO
+
+SELECT orderid
+    , orderdate
+    , custid
+    , empid
+FROM Sales.Orders
+WHERE YEAR(orderdate) = 2021
+    AND MONTH(orderdate) = 6;
 
 -- Desired output:
 orderid     orderdate  custid      empid
@@ -30,6 +42,17 @@ orderid     orderdate  custid      empid
 -- Return orders placed on the day before the last day of the month
 -- Tables involved: Sales.Orders table
 
+/* PDesg code */
+USE TSQLV6;
+GO
+
+SELECT orderid
+    , orderdate
+    , custid
+    , empid
+FROM Sales.Orders
+WHERE orderdate = DATEADD(DAY, -1, EOMONTH(orderdate)); 
+
 -- Desired output:
 orderid     orderdate  custid      empid
 ----------- ---------- ----------- -----------
@@ -51,6 +74,17 @@ orderid     orderdate  custid      empid
 -- Return employees with last name containing the letter 'e' twice or more
 -- Tables involved: HR.Employees table
 
+/* PDesg code */
+USE TSQLV6;
+GO
+
+SELECT empid
+    , firstname
+    , lastname
+FROM HR.Employees
+WHERE LEN(lastname) - LEN(REPLACE(lastname, 'e', '')) >= 2;
+
+
 -- Desired output:
 empid       firstname  lastname
 ----------- ---------- --------------------
@@ -63,6 +97,16 @@ empid       firstname  lastname
 -- Return orders with total value(qty*unitprice) greater than 10000
 -- sorted by total value
 -- Tables involved: Sales.OrderDetails table
+
+/* PDesg code */
+USE TSQLV6;
+GO
+
+SELECT orderid
+    , SUM(qty * unitprice) AS totalvalue
+FROM Sales.OrderDetails
+group by orderid
+HAVING SUM(qty * unitprice) > 10000;
 
 -- Desired output:
 orderid     totalvalue
