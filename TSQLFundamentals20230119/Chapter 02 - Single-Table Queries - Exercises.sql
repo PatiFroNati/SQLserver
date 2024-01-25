@@ -137,6 +137,16 @@ orderid     totalvalue
 -- in the employee last names.
 -- Tables involved: Sales.OrderDetails table
 
+/* PDesg Code*/
+USE TSQLV6;
+GO
+
+SELECT empid
+    , lastname
+    , LEFT(lastname, 1) as first_letter
+FROM HR.Employees
+WHERE LEFT(lastname, 1) LIKE '%[a-z]%'; 
+
 -- Desired output:
 empid       lastname
 ----------- --------------------
