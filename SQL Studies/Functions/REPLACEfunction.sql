@@ -5,7 +5,7 @@ REPLACE(string, substring1, substring2)
 
 Description: Replaces all occurrences of a substring (substring1) with another (substring2)
 
-Uses:  Reformat strings, count occurances of a character
+Uses:  Reformat strings, count occurrences of a character
 
 */
 
